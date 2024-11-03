@@ -1,1 +1,79 @@
 
+import random
+from random import sample
+
+
+# Function to choose a random word from a predefined list
+def choose_rand():
+    words = ['Programming', 'Python', 'Function', 'Variable', 'Loop', 'Condition', 'List', 'Dictionary', 'Tuple', 'Set']
+    return random.choice(words)
+
+
+# Function to shuffle the letters in a given word
+def shuffle_letters(word):
+    return ''.join(sample(word, len(word)))
+
+
+# Function to display the final score of both players
+def final_score(player1_score, player2_score):
+    print(f"\nFinal Scores:\nPlayer 1: {player1_score}\nPlayer 2: {player2_score}")
+
+
+# Function to declare the winner
+def declare_winner(player1_score, player2_score):
+    if player1_score > player2_score:
+        print(f"You are the winner, Player 1! Your score is {player1_score}. Thanks for playing!")
+    elif player2_score > player1_score:
+        print(f"You are the winner, Player 2! Your score is {player2_score}. Thanks for playing!")
+    else:
+        print("It's a draw!")
+
+
+# Function to play the game
+def play_game():
+    player1_name = input("Enter name for Player 1: ")
+    player2_name = input("Enter name for Player 2: ")
+
+    player1_score = 0
+    player2_score = 0
+    turn = 0
+
+    while True:
+        word = choose_rand()
+        jumbled_word = shuffle_letters(word)
+        print(f"\nJumbled word: {jumbled_word}")
+
+        if turn % 2 == 0:
+            answer = input(f"{player1_name}'s turn. Enter your answer (or type 'stop' to exit): ")
+            if answer.lower() == 'stop':
+                print("Game Ends!")
+                break
+            if answer.lower() == word.lower():
+                player1_score += 1
+                print("Correct! Your score is now:", player1_score)
+            else:
+                print("You are wrong!")
+        else:
+            answer = input(f"{player2_name}'s turn. Enter your answer (or type 'stop' to exit): ")
+            if answer.lower() == 'stop':
+                print("Game Ends!")
+                break
+            if answer.lower() == word.lower():
+                player2_score += 1
+                print("Correct! Your score is now:", player2_score)
+            else:
+                print("You are wrong!")
+
+        turn += 1
+
+        # Option to play again
+        if input("Do you want to continue playing? (Yes/No): ").lower() != 'yes':
+            break
+
+    final_score(player1_score, player2_score)
+    declare_winner(player1_score, player2_score)
+
+
+# Start the game
+if __name__ == "__main__":
+    play_game()
